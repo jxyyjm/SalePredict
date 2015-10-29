@@ -5,7 +5,7 @@ import numpy as np
 import datetime
 
 # 数据清理 和 合并 #
-Class DataProcess(TrainData, StoreInfoData):
+class PreProcess():
     '''
     objection : 数据预处理
     TrainData : DataFrame, 包含训练数据
@@ -43,7 +43,7 @@ Class DataProcess(TrainData, StoreInfoData):
         #self.NewTrainData['Date']
         #self.NewTrainData['Promo2SinceYear']
         #self.NewTrainData['PromoInterval']
-        if 'Promo2Duration' in list(slef.NewTrainData.columns()):
+        if 'Promo2Duration' in list(self.NewTrainData.columns):
             pass
         else:
             add = pd.DataFrame(np.zeros((np.shape(self.NewTrainData)[0], 1)), columns = ['Promo2Duration'])
@@ -55,7 +55,7 @@ Class DataProcess(TrainData, StoreInfoData):
     def AddNewColumns(self):
         #增加属性，按照Date，增加所处销售月份SaleMonth，所处销售季节SaleSeason，销售年份SaleYear
         # check 检查是否已经有了新的属性
-        columnNames = self.NewTrainData.columns()
+        columnNames = self.NewTrainData.columns
         columnNames = list(columnNames)
         CheckColName = ['SaleMonth', 'SaleSeason', 'SaleYear']
         for i in range(len(CheckColName)):
@@ -68,7 +68,7 @@ Class DataProcess(TrainData, StoreInfoData):
         # 对这三个属性 更新值
         Date = self.NewTrainData['Date']
         Date = pd.to_datetime(Date)
-        for i range(len(Date)):
+        for i in range(len(Date)):
             self.NewTrainData['SaleMonth'] = Date[i].month
             self.NewTrainData['SaleSeason'] = Date[i].month/3 + 1
             self.NewTrainData['SaleYear'] = Date[i].year
@@ -79,12 +79,12 @@ Class DataProcess(TrainData, StoreInfoData):
         # （2）Assortment 描述种类 a:basic => 1, b:extra => 2, c:extend => 3
         #（3）StateHoliday 节假日说明 a：公共节假日 => 1, b：复活节 =>2, c：圣诞节 => 3, 0:none => None
         #（4）其他的还没有想到
-        self.NewTrainData['StoreType'].replace(['a', 'b', 'c', 'd'], [1, 2, 3, ,4])
+        self.NewTrainData['StoreType'].replace(['a', 'b', 'c', 'd'], [1, 2, 3, 4])
         self.NewTrainData['Assortment'].replace(['a', 'b', 'c'], [1, 2, 3])
         self.NewTrainData['StateHoliday'].replace(['a', 'b', 'c'], [1, 2, 3])
         print("字符转换have been done ...")
-def __name__=="__main__":
+if __name__=="__main__":
     TrainData = 0
     StoreInfoData = 0
-    CPreProcess = DataProcess(TrainData, StoreInfoData)
+    CPreProcess = PreProcess(TrainData, StoreInfoData)
     CPreProcess.Say()
